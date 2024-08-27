@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "repository": "https://github.com/Guraspinho/BoGPay",
   "scripts": {
     "build": "tsup",
     "build-and-run": "npm run build && npm start",
@@ -14,7 +15,8 @@
   "author": "Irakli Guraspashvili",
   "license": "MIT",
   "dependencies": {
-    "axios": "^1.7.5"
+    "axios": "^1.7.5",
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {
     "@types/node": "^22.5.0",

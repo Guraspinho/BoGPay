@@ -21,7 +21,7 @@ export async function getAuthToken(clientId: string | undefined, secretKey: stri
         )
 
         const data = await  response.json();
-        return data.access_token;
+        return data;
     }
     catch (error)
     {

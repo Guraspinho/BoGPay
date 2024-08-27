@@ -1,6 +1,6 @@
 // Function to authenticate with the Bank of Georgia server
 
-export async function requestToken(clientId: string | undefined, secretKey: string | undefined) : Promise<string>
+export async function getAuthToken(clientId: string | undefined, secretKey: string | undefined) : Promise<string>
 {
     const authString = `${clientId}:${secretKey}`;
     const encodedAuthString = Buffer.from(authString).toString('base64');

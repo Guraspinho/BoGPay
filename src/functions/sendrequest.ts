@@ -4,7 +4,7 @@ import { getAuthToken } from "./authToken";
 const clientId = process.env.BOG_CLIENT_ID;
 const secretKey = process.env.BOG_SECRET_KEY;
 
-type requestHeaders = 
+type RequestHeaders = 
 {
     "Accept_Language"?: string,
     "Authorization": string,
@@ -13,39 +13,57 @@ type requestHeaders =
     "Theme"?: string
 }
 
-type buyer = 
+type Buyer = 
 {
     "full_name"?: string
     "masked_email"?: string
     "maked_phone"?: string
 }
-type basket = [product_id:string];
+
+interface BasketItem
+{
+    "product_id": string; // required
+    "description"?: string; // optional
+    "quantity": number; // required
+    "unit_price": number; // required
+    "unit_discount_price"?: number; // optional
+    "vat"?: number; // optional
+    "vat_percent"?: number; // optional
+    "total_price"?: number; // optional
+    "image"?: string; // optional
+    "package_code"?: string; // optional
+    "tin"?: string; // optional
+    "pinfl"?: string; // optional
+    "product_discount_id"?: string; // optional
+}
+
+type Basket = BasketItem[];
+
+type Delivery = 
+{
+    amount?: number;
+}
 
 type purchase_units = 
 {
-    basket: basket
-
-
+    basket: Basket
 }
 
 type requestBody = 
 {
     "application_type"?: string,
-    "buyer"?: buyer,
+    "buyer"?: Buyer,
     "callback_url": string,
     "external_order_id"?: string,
     "purchase_units": purchase_units,
-
-
-
 }
 
 type requestCredentials = 
 {
-    headers: requestHeaders,
+    headers: RequestHeaders,
     body: requestBody
-    
 }
+
 
 export async function orderRequest()
 {

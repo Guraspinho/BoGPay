@@ -41,30 +41,82 @@ type Basket = BasketItem[];
 
 type Delivery = 
 {
-    amount?: number;
+    "amount"?: number;
 }
 
 type purchase_units = 
 {
-    basket: Basket
+    "basket": Basket,
+    "delivery": Delivery
+    "total_amount": number,
+    "total_discount_amount"?:number,
+    "currency"?: string
 }
 
-type requestBody = 
+type RedirectUrls = 
+{
+    "success"?: string,
+    "fail"?: string
+}
+
+type LoanType = 
+{
+    "type"?: string
+    "month"?: string
+}
+
+type CampaignType = 
+{
+    "card"?: string,
+    "type"?: string,
+}
+
+type GooglePay = 
+{
+    "google_pay_token"?: string,
+    "external"?:boolean
+}
+
+type ApplePay = 
+{
+    "external"?: boolean
+}
+
+
+type Account = 
+{
+    "tag"?: string
+}
+type Config = 
+{
+    "loan"?: LoanType,
+    "campaign"?: CampaignType,
+    "google_pay"?:  GooglePay
+    "apple_pay"?: ApplePay
+    "account"?: Account
+}
+
+type RequestBody = 
 {
     "application_type"?: string,
     "buyer"?: Buyer,
     "callback_url": string,
     "external_order_id"?: string,
+    "capture"?: string,
     "purchase_units": purchase_units,
+    "redirect_urls"?: RedirectUrls,
+    "ttl"?: number,
+    "payment_method"?: Array<string>
+    "config"?: Config
 }
 
 type requestCredentials = 
 {
     headers: RequestHeaders,
-    body: requestBody
+    body: RequestBody
 }
 
-
+    
 export async function orderRequest()
 {
     try

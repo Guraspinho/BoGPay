@@ -38,6 +38,23 @@ export async function orderRequest()
 
 
 
+const imaginaryData = {
+    items: [
+        {
+            name: 'item1',
+            price: 1,
+            quantity: 1,
+            id: 1
+        },
+        {
+            name: 'item2',
+            price: 2,
+            quantity: 2,
+            id: 2
+        }
+    ],
+};
+
 const data =
 {
     callback_url: "https://payment-demo.onrender.com/callback",

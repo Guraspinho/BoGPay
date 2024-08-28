@@ -4,11 +4,55 @@ import { getAuthToken } from "./authToken";
 const clientId = process.env.BOG_CLIENT_ID;
 const secretKey = process.env.BOG_SECRET_KEY;
 
+type requestHeaders = 
+{
+    "Accept_Language"?: string,
+    "Authorization": string,
+    "Content-Type"?: "application/json",
+    "idempotencyKey"?: string,
+    "Theme"?: string
+}
+
+type buyer = 
+{
+    "full_name"?: string
+    "masked_email"?: string
+    "maked_phone"?: string
+}
+type basket = [product_id:string];
+
+type purchase_units = 
+{
+    basket: basket
+
+
+}
+
+type requestBody = 
+{
+    "application_type"?: string,
+    "buyer"?: buyer,
+    "callback_url": string,
+    "external_order_id"?: string,
+    "purchase_units": purchase_units,
+
+
+
+}
+
+type requestCredentials = 
+{
+    headers: requestHeaders,
+    body: requestBody
+    
+}
+
 export async function orderRequest()
 {
     try
     {
-        const token = await requestToken(clientId, secretKey);
+        // authenticate buisness as valid bog api user
+        const token = await getAuthToken(clientId, secretKey);
 
         const response = await fetch("https://api.bog.ge/payments/v1/ecommerce/orders",
             {

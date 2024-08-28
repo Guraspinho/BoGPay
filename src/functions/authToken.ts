@@ -25,7 +25,7 @@ export async function getAuthToken(clientId: string | undefined, secretKey: stri
     }
     catch (error)
     {
-        console.log(`Error: ${error}`);
+        console.log(`Error in getAuthToken: ${error}`);
         throw new Error('Failed to get access token');
     }
 }

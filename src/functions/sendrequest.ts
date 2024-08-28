@@ -1,196 +1,47 @@
 import { getAuthToken } from "./authToken";
+import { requestCredentials } from "../types/requestTypes";
 
 
 const clientId = process.env.BOG_CLIENT_ID;
 const secretKey = process.env.BOG_SECRET_KEY;
 
-type RequestHeaders = 
-{
-    "Accept_Language"?: string,
-    "Authorization": string,
-    "Content-Type"?: "application/json",
-    "idempotencyKey"?: string,
-    "Theme"?: string
-}
-
-type Buyer = 
-{
-    "full_name"?: string
-    "masked_email"?: string
-    "maked_phone"?: string
-}
-
-interface BasketItem
-{
-    "product_id": string; // required
-    "description"?: string; // optional
-    "quantity": number; // required
-    "unit_price": number; // required
-    "unit_discount_price"?: number; // optional
-    "vat"?: number; // optional
-    "vat_percent"?: number; // optional
-    "total_price"?: number; // optional
-    "image"?: string; // optional
-    "package_code"?: string; // optional
-    "tin"?: string; // optional
-    "pinfl"?: string; // optional
-    "product_discount_id"?: string; // optional
-}
-
-type Basket = BasketItem[];
-
-type Delivery = 
-{
-    "amount"?: number;
-}
-
-type purchase_units = 
-{
-    "basket": Basket,
-    "delivery": Delivery
-    "total_amount": number,
-    "total_discount_amount"?:number,
-    "currency"?: string
-}
-
-type RedirectUrls = 
-{
-    "success"?: string,
-    "fail"?: string
-}
-
-type LoanType = 
-{
-    "type"?: string
-    "month"?: string
-}
-
-type CampaignType = 
-{
-    "card"?: string,
-    "type"?: string,
-}
-
-type GooglePay = 
-{
-    "google_pay_token"?: string,
-    "external"?:boolean
-}
-
-type ApplePay = 
-{
-    "external"?: boolean
-}
-
-
-type Account = 
-{
-    "tag"?: string
-}
-type Config = 
-{
-    "loan"?: LoanType,
-    "campaign"?: CampaignType,
-    "google_pay"?:  GooglePay
-    "apple_pay"?: ApplePay
-    "account"?: Account
-}
-
-type RequestBody = 
-{
-    "application_type"?: string,
-    "buyer"?: Buyer,
-    "callback_url": string,
-    "external_order_id"?: string,
-    "capture"?: string,
-    "purchase_units": purchase_units,
-    "redirect_urls"?: RedirectUrls,
-    "ttl"?: number,
-    "payment_method"?: Array<string>
-    "config"?: Config
-}
-
-type requestCredentials = 
-{
-    headers: RequestHeaders,
-    body: RequestBody
-}
-
-    
-export async function orderRequest()
+export let token = "";
+export let order_id = "";
+export async function orderRequest(credentials: requestCredentials)
 {
     try
     {
         // authenticate buisness as valid bog api user
-        const token = await getAuthToken(clientId, secretKey);
+        token = await getAuthToken(clientId, secretKey);
+        credentials.headers.Authorization = `Bearer ${token}`;
 
         const response = await fetch("https://api.bog.ge/payments/v1/ecommerce/orders",
             {
                 method: "POST",
-                headers:
-                {
-                    "Accept-Language": "ka",
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": 'application/json',
-                }
+                headers: credentials.headers,
+                body: JSON.stringify(credentials.body)
             }
-            
         )
+
+
+        // Check if the response is successful
+        if (!response.ok)
+        {
+            throw new Error(`Request failed with status ${response.status}: ${response.statusText}`);
+        }
             
         const data = await response.json();
+
+        if(data.id)
+            order_id = data.id;
 
         return data;
 
     }
     catch (error)
     {
-        console.log(error);
+        console.log(`Error in orderRequest: ${error}`);
+        throw error;
     }
-
-
 }
-
-
-
-const imaginaryData = {
-    items: [
-        {
-            name: 'item1',
-            price: 1,
-            quantity: 1,
-            id: 1
-        },
-        {
-            name: 'item2',
-            price: 2,
-            quantity: 2,
-            id: 2
-        }
-    ],
-};
-
-const data =
-{
-    callback_url: "https://payment-demo.onrender.com/callback",
-    purchase_units: {
-        currency: "USD",
-        total_amount: imaginaryData.items[0].price,
-        basket: [
-            {
-                product_id: imaginaryData.items[0].id,
-                description: imaginaryData.items[0].name,
-                quantity: imaginaryData.items[0].quantity,
-                unit_price: imaginaryData.items[0].price,
-                total_price: imaginaryData.items[0].price * imaginaryData.items[0].quantity
-            }
-        ]
-    },
-    redirect_urls:
-    {
-        fail: "https://payment-demo.onrender.com/fail",
-        success: "https://payment-demo.onrender.com/success"
-    },
-    payment_method: ["card"]
-};
-
 

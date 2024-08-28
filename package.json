@@ -1,11 +1,12 @@
 {
   "name": "bogpay",
-  "version": "1.0.1",
+  "version": "1.1.2",
   "description": "An NPM package for simplifying and managing payments with the Bank of Georgia API, providing easy-to-use functions for authentication, payment processing, refunds, and more.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "repository": "https://github.com/Guraspinho/BoGPay",
+  "keywords": ["Bank of Georgia", "payment", "bog", "api"],
   "scripts": {
     "build": "tsup",
     "build-and-run": "npm run build && npm start",

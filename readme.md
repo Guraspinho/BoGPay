@@ -34,37 +34,84 @@ This method allows businesses to undergo the authentication process. Upon callin
 
 ````js
 
-
-bogpay.getAuthToken(clientId, secretKey)
-.then(data => 
-    {
-        console.log(data); // the token can be accessed through data.access_token
-    })
-.catch(error =>
-    {
-        console.error(error);
-    });
+try
+{
+    const data = await getAuthToken(clientId, secretKey) // returns Authentication token, it's lifetime and type(Bearer)
+}
+catch (error)
+{
+    //...
+}
 
 ````
 
 ## Order request
 To place an order request, businesses must send payment details, technical specifications, and the amount to be paid to the online payment server. If the process is successful, the customer should be redirected to the online payment page at the redirect address returned to the _link parameter to complete the payment. You do not need to pass ``Content-Type`` or ``Authorization`` header since they are already set by itself
 
+````js
+try
+{
+    // returns order_id and links for payment details and redirects
+    const response = await orderRequest(requestCredentials) // requestCredentials is an object and it's strucutre shown below
+}
+catch (error)
+{
+    //...
+}
+````
 
+A structure of requestCredentials:
+````json
+
+{
+    "headers": {
+        "Authorization": "Bearer some_token", // required
+        "Content-Type": "application/json" // required
+    },
+    "body": {
+        "callback_url": "https://example.com/callback", // required
+        "external_order_id": "order_12345", // optional
+        "purchase_units": {
+            "basket": [
+                {
+                    "product_id": "prod_001", // required
+                    "quantity": 2, // required
+                    "unit_price": 100 // required
+                },
+                {
+                    "product_id": "prod_002", // required
+                    "quantity": 1, // required
+                    "unit_price": 200 // required
+                }
+            ],
+            "total_amount": 420 // required
+        },
+        "redirect_urls": {
+            "success": "https://example.com/success", // optional
+            "fail": "https://example.com/fail" // optional
+        }
+    }
+}
+
+
+````
+
+For more options for the request check out [Bank of Georgia's official docs ](https://api.bog.ge/docs/en/payments/standard-process/create-order)
 
 ## Payment details
 This method allows businesses to receive detailed information about an online payment using its identifier.
 
+**Note: The in order to run this function, ``getAuthToken()`` must be run first**
 ````js
 
-paymentDetails(order_id) // fetches payment details for the given order ID.
-.then(data => 
-    {
-        console.log(data);
-    })
-.catch(error =>
-    {
-        console.error(error);
-    });
+try
+{
+    const details = await paymentDetails(order_id) // fetches payment details for the given order ID
+}
+catch (error)
+{
+    //...
+}
+
 
 ````

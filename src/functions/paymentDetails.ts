@@ -1,4 +1,5 @@
-import { token, order_id } from './sendrequest';
+import { order_id } from './sendrequest';
+import { token } from './authToken';
 
 
 

@@ -1,19 +1,14 @@
-import { getAuthToken } from "./authToken";
+import { token } from "./authToken";
 import { requestCredentials } from "../types/requestTypes";
 
 
-const clientId = process.env.BOG_CLIENT_ID;
-const secretKey = process.env.BOG_SECRET_KEY;
 
-export let token = "";
+
 export let order_id = "";
 export async function orderRequest(credentials: requestCredentials)
 {
     try
     {
-        // authenticate buisness as valid bog api user
-        const bogResponse = await getAuthToken(clientId, secretKey);
-        token = bogResponse.access_token;
         
         credentials.headers.Authorization = `Bearer ${token}`;
 
@@ -24,7 +19,6 @@ export async function orderRequest(credentials: requestCredentials)
                 body: JSON.stringify(credentials.body)
             }
         )
-
 
         // Check if the response is successful
         if (!response.ok)

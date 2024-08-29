@@ -1,6 +1,6 @@
 // Function to authenticate with the Bank of Georgia server
 
-
+export let token = "";
 export async function getAuthToken(clientId: string | undefined, secretKey: string | undefined)
 {
     const authString = `${clientId}:${secretKey}`;
@@ -22,6 +22,8 @@ export async function getAuthToken(clientId: string | undefined, secretKey: stri
         )
 
         const data = await response.json();
+        token = data.access_token;
+
         return data;
     }
     catch (error)

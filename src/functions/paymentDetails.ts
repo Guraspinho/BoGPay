@@ -1,12 +1,9 @@
-import { order_id } from './sendrequest';
 import { token } from './authToken';
 
 
 
 // Fetches payment details for the given order ID.
-
-
-export async function getPaymentDetails()
+export async function getPaymentDetails(order_id: string)
 {
     try
     { 

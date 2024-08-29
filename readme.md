@@ -1,5 +1,7 @@
 # Bank Of Georgia online payment API
 
+
+
 An NPM package to simplify the usage and integration of the Bank of Georgia online payment API.
 
 
@@ -51,10 +53,11 @@ To place an order request, businesses must send payment details, technical speci
 
 
 ## Payment details
+This method allows businesses to receive detailed information about an online payment using its identifier.
 
 ````js
 
-paymentDetails()
+paymentDetails(order_id) // fetches payment details for the given order ID.
 .then(data => 
     {
         console.log(data);

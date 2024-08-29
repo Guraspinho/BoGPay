@@ -3,13 +3,11 @@ import { requestCredentials } from "../types/requestTypes";
 
 
 
-
-export let order_id = "";
 export async function orderRequest(credentials: requestCredentials)
 {
     try
     {
-        
+
         credentials.headers.Authorization = `Bearer ${token}`;
 
         const response = await fetch("https://api.bog.ge/payments/v1/ecommerce/orders",
@@ -27,9 +25,6 @@ export async function orderRequest(credentials: requestCredentials)
         }
             
         const data = await response.json();
-
-        if(data.id)
-            order_id = data.id;
 
         return data;
 

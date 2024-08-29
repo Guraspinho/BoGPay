@@ -29,7 +29,7 @@ export async function orderRequest(credentials: requestCredentials)
         // Check if the response is successful
         if (!response.ok)
         {
-            throw new Error(`Request failed with status ${response.status}: ${response.statusText}`);
+            throw new Error(`Request failed with status ${response.status}: ${response}`);
         }
             
         const data = await response.json();

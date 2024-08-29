@@ -11,6 +11,7 @@ export async function getPaymentDetails()
     { 
         const response = await  fetch(`https://api.bog.ge/payments/v1/receipt/:${order_id}`,
         {
+            method: "GET",
             headers:
             {
                 Authorization: `Bearer ${token}`

@@ -12,7 +12,9 @@ export async function orderRequest(credentials: requestCredentials)
     try
     {
         // authenticate buisness as valid bog api user
-        token = await getAuthToken(clientId, secretKey);
+        const bogResponse = await getAuthToken(clientId, secretKey);
+        token = bogResponse.access_token;
+        
         credentials.headers.Authorization = `Bearer ${token}`;
 
         const response = await fetch("https://api.bog.ge/payments/v1/ecommerce/orders",

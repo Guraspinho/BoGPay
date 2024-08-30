@@ -1,6 +1,6 @@
 {
   "name": "bogpay",
-  "version": "1.4.7",
+  "version": "1.5.8",
   "description": "An NPM package for simplifying and managing payments with the Bank of Georgia API, providing easy-to-use functions for authentication, payment processing, refunds, and more.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

@@ -65,30 +65,30 @@ A structure of requestCredentials:
 
 {
     "headers": {
-        "Authorization": "Bearer some_token", // required
-        "Content-Type": "application/json" // required
+        "Authorization": "Bearer some_token",
+        "Content-Type": "application/json"
     },
     "body": {
-        "callback_url": "https://example.com/callback", // required
-        "external_order_id": "order_12345", // optional
+        "callback_url": "https://example.com/callback",
+        "external_order_id": "order_12345",
         "purchase_units": {
             "basket": [
                 {
-                    "product_id": "prod_001", // required
-                    "quantity": 2, // required
-                    "unit_price": 100 // required
+                    "product_id": "prod_001",
+                    "quantity": 2, 
+                    "unit_price": 100 
                 },
                 {
-                    "product_id": "prod_002", // required
-                    "quantity": 1, // required
-                    "unit_price": 200 // required
+                    "product_id": "prod_002", 
+                    "quantity": 1, 
+                    "unit_price": 200 
                 }
             ],
-            "total_amount": 420 // required
+            "total_amount": 420 
         },
         "redirect_urls": {
-            "success": "https://example.com/success", // optional
-            "fail": "https://example.com/fail" // optional
+            "success": "https://example.com/success", 
+            "fail": "https://example.com/fail"
         }
     }
 }

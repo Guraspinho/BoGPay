@@ -50,7 +50,7 @@ type Delivery =
 type purchase_units = 
 {
     "basket": Basket,
-    "delivery": Delivery
+    "delivery"?: Delivery
     "total_amount": number,
     "total_discount_amount"?:number,
     "currency"?: string

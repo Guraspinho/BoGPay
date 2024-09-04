@@ -16,11 +16,6 @@ export async function getPaymentDetails(order_id: string)
             }
         });
         
-        // Check if the response is successful
-        if (!response.ok)
-        {
-            throw new Error(`Request failed with status ${response.status}: ${response}`);
-        }
 
         const data = await response.json();
     

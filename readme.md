@@ -46,7 +46,7 @@ catch (error)
 ````
 
 ## Order request
-To place an order request, businesses must send payment details, technical specifications, and the amount to be paid to the online payment server. If the process is successful, the customer should be redirected to the online payment page at the redirect address returned to the _link parameter to complete the payment. You do not need to pass ``Content-Type`` or ``Authorization`` header since they are already set by itself
+To place an order request, businesses must send payment details, technical specifications, and the amount to be paid to the online payment server. If the process is successful, the customer should be redirected to the online payment page at the redirect address returned to the _link parameter to complete the payment.
 
 ````js
 try
@@ -65,7 +65,7 @@ A structure of requestCredentials:
 
 {
     "headers": {
-        "Authorization": "Bearer some_token",
+        "Authorization": "Bearer some_token", // change "some_token" with your actual token
         "Content-Type": "application/json"
     },
     "body": {
@@ -113,5 +113,45 @@ catch (error)
     //...
 }
 
+
+````
+## Wrap up
+If you encounter any trouble using the library, use this template:
+
+````js
+
+async function payment()
+{
+    try
+    {
+        
+        const {access_token} = await getAuthToken(clientId,secretKey); // authenticate a buisness
+    
+        const requestCredentials = 
+        {
+            headers: 
+            {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${access_token}`
+            },
+            body: data
+        }
+        
+        const requestData = await orderRequest(requestCredentials); // make a request with required data
+    
+    
+        const details = await getPaymentDetails(requestData.id); // get details about the payment
+        
+        console.log(details);
+        
+        return details;
+
+    }
+    catch (error)
+    {
+        console.error(error);
+    }
+    
+}
 
 ````

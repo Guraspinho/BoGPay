@@ -4,7 +4,7 @@ type RequestHeaders =
 {
     "Accept_Language"?: string,
     "Authorization": string,
-    "Content-Type"?: string,
+    "Content-Type": string,
     "Idempotency-Key"?: string,
     "Theme"?: string
 }
